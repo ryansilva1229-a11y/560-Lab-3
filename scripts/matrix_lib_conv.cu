@@ -5,19 +5,19 @@
 //----------------------Functions Start
 //Error Checkers to avoid silent errors, found in stack overflow
 // CUDA Error Checking
-#define cuda_check(err) { \
-    if (err != cudaSuccess) { \
-        std::cout << cudaGetErrorString(err) << " in " << __FILE__ << " at line " << __LINE__ << "\n"; \
-        exit(EXIT_FAILURE); \
-    } \
+#define cuda_check(err) { 
+    if (err != cudaSuccess) { 
+        std::cout << cudaGetErrorString(err) << " in " << __FILE__ << " at line " << __LINE__ << "\n"; 
+        exit(EXIT_FAILURE); 
+    } 
 }
 
 // CUBLAS Error Checking
-#define cublas_check(status) { \
-    if (status != CUBLAS_STATUS_SUCCESS) { \
-        std::cerr << "cuBLAS Error" << std::endl; \
-        exit(EXIT_FAILURE); \
-    } \
+#define cublas_check(status) { 
+    if (status != CUBLAS_STATUS_SUCCESS) { 
+        std::cerr << "cuBLAS Error" << std::endl; 
+        exit(EXIT_FAILURE); 
+    } 
 }
 
 
@@ -112,7 +112,7 @@ __global__ void imageConvNaive(float const *input_image, float const *c_filter, 
         output_image[outputRow*n_cols+outputCol] = Pvalue;
     }
     
-extern "C" void imageConvNaive(float* input_image, float* c_kernel, float* output_image, int n_rows, int n_cols, int filter_dim){
+extern "C" void gpu_image_conv(float* input_image, float* c_kernel, float* output_image, int n_rows, int n_cols, int filter_dim){
     dim3 block(TILE_WIDTH, TILE_WIDTH);
     dim3 grid((n_cols + block.x-1)/block.x,(n_rows+block.y-1)/block.y);
     imageConvNaive<<<grid,block>>>(
