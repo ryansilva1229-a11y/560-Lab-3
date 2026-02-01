@@ -8,7 +8,7 @@
 
 #define MAX_FILENAME 256
 
-// -------------------- PGM I/O --------------------
+
 uint8_t* read_pgm(const char* filename, int *width, int *height) {
     FILE *f = fopen(filename, "rb");
     if (!f) { perror("fopen"); exit(1); }
@@ -34,7 +34,7 @@ void write_pgm(const char* filename, uint8_t* data, int width, int height) {
     fclose(f);
 }
 
-// -------------------- Convolution --------------------
+
 void convolve(uint8_t* input, uint8_t* output, int width, int height, float* kernel, int ksize) {
     int khalf = ksize / 2;
     for (int y=0; y<height; y++) {
@@ -56,20 +56,19 @@ void convolve(uint8_t* input, uint8_t* output, int width, int height, float* ker
     }
 }
 
-// -------------------- Main --------------------
+
 int main() {
-    // List of images (your three sizes)
+
     const char* images[] = {"input_256.pgm","input_512.pgm","input_1024.pgm"};
     const char* folders[] = {"out_256","out_512","out_1024"};
     int n_images = 3;
 
-    // Create output folders
+
     for(int i=0;i<n_images;i++){
         mkdir(folders[i], 0777);  // ignore if exists
     }
 
-    // -------------------- Define Kernels --------------------
-    // 3x3 Kernels
+
     float identity[9] = {0,0,0,0,1,0,0,0,0};
     float edge1[9] = {0,-1,0,-1,4,-1,0,-1,0};
     float edge2[9] = {-1,-1,-1,-1,8,-1,-1,-1,-1};
@@ -77,7 +76,7 @@ int main() {
     float box_blur[9] = {1.0f/9,1.0f/9,1.0f/9,1.0f/9,1.0f/9,1.0f/9,1.0f/9,1.0f/9,1.0f/9};
     float gaussian3[9] = {1.0f/16,2.0f/16,1.0f/16,2.0f/16,4.0f/16,2.0f/16,1.0f/16,2.0f/16,1.0f/16};
 
-    // 5x5 Kernels
+
     float gaussian5[25] = {
         1,4,6,4,1,
         4,16,24,16,4,
@@ -96,7 +95,7 @@ int main() {
     };
     for(int i=0;i<25;i++) unsharp5[i]/=-256.0f;
 
-    // 7x7 Gaussian approximation
+
     float gaussian7[49] = {
         0,0,1,2,1,0,0,
         0,3,13,22,13,3,0,
@@ -108,7 +107,7 @@ int main() {
     };
     for(int i=0;i<49;i++) gaussian7[i]/=1003.0f;
 
-    // -------------------- Filters array --------------------
+  
     struct {char* name; float* kernel; int ksize;} filters[] = {
         {"identity", identity, 3},
         {"edge1", edge1, 3},
@@ -124,7 +123,7 @@ int main() {
 
     char outname[MAX_FILENAME];
 
-    // -------------------- Apply filters to all images --------------------
+
     for(int img_idx=0; img_idx<n_images; img_idx++){
         int width, height;
         uint8_t *input = read_pgm(images[img_idx], &width, &height);
