@@ -1,0 +1,10 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/elisehadidi/Desktop/dsci560-lab-3/560-Lab-3/scripts/convolution_full'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _read_pgm, symObjAddr: 0x0, symBinAddr: 0x1000031B4, symSize: 0x150 }
+  - { offsetInCU: 0x83, offset: 0x83, size: 0x8, addend: 0x0, symName: _read_pgm, symObjAddr: 0x0, symBinAddr: 0x1000031B4, symSize: 0x150 }
+  - { offsetInCU: 0x11B, offset: 0x11B, size: 0x8, addend: 0x0, symName: _write_pgm, symObjAddr: 0x150, symBinAddr: 0x100003304, symSize: 0xBC }
+  - { offsetInCU: 0x177, offset: 0x177, size: 0x8, addend: 0x0, symName: _convolve, symObjAddr: 0x20C, symBinAddr: 0x1000033C0, symSize: 0x258 }
+  - { offsetInCU: 0x2A7, offset: 0x2A7, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x464, symBinAddr: 0x100003618, symSize: 0x598 }
+...
